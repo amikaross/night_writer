@@ -1,11 +1,26 @@
-#write a ruby program that prints a line to the terminal:
-#ruby ./lib/night_writer.rb message.txt braille.txt 
-#Created 'braille.txt' containing 256 characters
+require "./lib/file_reader"
 
+class NightWriter
+  attr_reader :reader,
+              :filename
 
-message = File.read(ARGV[0])
+  def initialize(file)
+    @reader = FileReader.new.read(file)
+    @filename = ARGV[1]
+  end
 
-puts "Created '#{ARGV[1]}' containing #{message.length} characters"
+  # def encode_file_to_braille
 
+  # end
 
+  # def encode_to_braille(input)
 
+  # end
+
+  def cli 
+    "Created '#{filename}' containing #{reader.length} characters"
+  end
+end
+
+night_writer = NightWriter.new(ARGV[0])
+puts night_writer.cli
