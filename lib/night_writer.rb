@@ -1,26 +1,30 @@
 require "./lib/file_reader"
 
 class NightWriter
-  attr_reader :reader,
+  attr_reader :message,
               :filename
 
   def initialize(file)
-    @reader = FileReader.new.read(file)
+    @message = FileReader.new.read(file)
     @filename = ARGV[1]
   end
 
-  # def encode_file_to_braille
+  def encode_to_braille
+    array_of_lines = by_lines(@message.downcase)
+  end
 
-  # end
-
-  # def encode_to_braille(input)
-
-  # end
+  def by_lines(string)
+    (0..(string.length-1)/40).map { |i| string[i * 40, 40] }
+  end
 
   def cli 
-    "Created '#{filename}' containing #{reader.length} characters"
+    "Created '#{filename}' containing #{message.length} characters"
   end
 end
 
+# runner code that has to be commented out when running test suite 
 night_writer = NightWriter.new(ARGV[0])
 puts night_writer.cli
+
+# require 'pry'; binding.pry
+
