@@ -22,7 +22,7 @@ class NightWriter
 
   def terminal_output
     FileIO.write(new_filename, encode_to_braille)
-    "Created '#{new_filename}' containing #{message.length} characters"
+    "Created '#{new_filename}' containing #{message.length} characters."
   end
 end
 

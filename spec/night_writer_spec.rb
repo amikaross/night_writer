@@ -28,7 +28,7 @@ RSpec.describe NightWriter do
 
   describe "#by_lines" do 
     it "returns an array of strings of 40 characters (until final one which may be less)" do 
-      night_writer = NightWriter.new("message.txt")
+      night_writer = NightWriter.new("./spec/fixtures/test.txt")
       input = "we meet in an hour of change and challenge, in a decade of hope and fear."
       expected_output = ["we meet in an hour of change and challen",
                          "ge, in a decade of hope and fear."]
@@ -41,7 +41,7 @@ RSpec.describe NightWriter do
     it "returns a string with the correct filename and number of characters" do 
       night_writer = NightWriter.new("./spec/fixtures/test.txt") 
       allow(night_writer).to receive(:new_filename).and_return("braille.txt")
-      expect(night_writer.terminal_output).to eq("Created 'braille.txt' containing 14 characters") 
+      expect(night_writer.terminal_output).to eq("Created 'braille.txt' containing 14 characters.") 
     end
   end
 end

@@ -3,7 +3,7 @@ require "./lib/encoder"
 
 class NightReader 
   attr_reader :braille_message,
-              :filename
+              :new_filename
   
   def initialize(file)
     @braille_message = FileIO.read(file)
@@ -22,7 +22,7 @@ class NightReader
 
   def terminal_output
     FileIO.write(new_filename, decode_from_braille)
-    "Created '#{new_filename}' containing #{decode_from_braille.length} characters"
+    "Created '#{new_filename}' containing #{decode_from_braille.length} characters."
   end
 end
 
