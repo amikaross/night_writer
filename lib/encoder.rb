@@ -10,7 +10,6 @@ class Encoder
 # Would love to refactor this one!!!!!!
   def self.encode_line(line)
     braille_chars = line.split("").each_with_object([]) do |char, array|
-      next if char == "\n"
       array << self.encode_char(char)
     end 
     line_1 = ""
