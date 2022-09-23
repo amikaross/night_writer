@@ -6,7 +6,7 @@ class NightWriter
               :new_filename
 
   def initialize(file)
-    @message = FileIO.read(file).delete("\n")
+    @message = FileIO.read(file).delete("\n") 
     @new_filename = ARGV[1]
   end
 
@@ -26,7 +26,9 @@ class NightWriter
   end
 end
 
-# runner code that has to be commented out when running test suite 
-# night_writer = NightWriter.new(ARGV[0])
-# puts night_writer.terminal_output
+ 
+if ARGV[0] != "spec"
+  night_writer = NightWriter.new(ARGV[0]) 
+  puts night_writer.terminal_output
+end 
 

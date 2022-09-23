@@ -26,6 +26,8 @@ class NightReader
   end
 end
 
-# runner code that has to be commented out when running test suite 
-# night_reader = NightReader.new(ARGV[0])
-# puts night_reader.terminal_output
+
+if ARGV[0] != "spec"
+  night_reader = NightReader.new(ARGV[0])
+  puts night_reader.terminal_output
+end
