@@ -9,4 +9,8 @@ class NightReader
     @braille_message = FileIO.read(file)
     @filename = ARGV[1]
   end
+
+  def decode_from_braille
+    
+  end
 end
