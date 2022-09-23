@@ -20,12 +20,8 @@ class NightWriter
     end
   end
 
-  def output_file
-    FileIO.write(filename, encode_to_braille)
-  end
-
   def terminal_output
-    output_file
+    FileIO.write(filename, encode_to_braille)
     "Created '#{filename}' containing #{message.length} characters"
   end
 end
