@@ -9,11 +9,20 @@ RSpec.describe NightWriter do
   end
 
   describe "#encode_to_braille" do 
-    it "takes plain text and converts it into braille" do 
+    it "takes plain text and converts it into braille - single character" do 
       night_writer = NightWriter.new("./spec/fixtures/single_letter.txt")
-      expect(night_writer.encode_to_braille).to eq("0.\n..\n..")
+      expect(night_writer.encode_to_braille).to eq("0.\n..\n..\n\n")
+    end 
+
+    it "takes plain text and converts it into braille - multiple characters" do 
       night_writer = NightWriter.new("./spec/fixtures/multi_letter.txt")
-      expect(night_writer.encode_to_braille).to eq("0.0.00\n..0...\n......")
+      expect(night_writer.encode_to_braille).to eq("0.0.00\n..0...\n......\n\n")
+    end 
+
+    it "takes plain text and converts it into braille - multiple lines" do
+      night_writer = NightWriter.new("./spec/fixtures/multi_line.txt")
+      expected_output = ".00...000.0..0...000..0.00..0.0.0.0...0.00..000.0.00000...0.0000..000.0.0.0.0.00\n00.0.....0.000..0..0.....0..00.0..00...00.....00...000.0.....0.0....00..0.0..0.0\n.0....0.....0.....0.....0.....0.000...0...........0.........0...........0.0...0.\n\n000......000..0...000.000.000.\n00.00...0..0.......0.0.....0.0\n..........0...................\n\n"
+      expect(night_writer.encode_to_braille).to eq(expected_output)
     end
   end
 

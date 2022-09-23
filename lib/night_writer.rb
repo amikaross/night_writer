@@ -11,8 +11,9 @@ class NightWriter
   end
 
   def encode_to_braille
-    # array_of_lines = by_lines(@message.downcase)
-    Encoder.encode_line(@message)
+    by_lines(@message.downcase).each_with_object("") do |line, string|
+      string << "#{Encoder.encode_line(line)}\n"
+    end
   end
 
   def by_lines(string)

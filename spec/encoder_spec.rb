@@ -48,7 +48,7 @@ RSpec.describe Encoder do
   end
 
   it "can encode a given plain-text line into braille" do 
-    expected_output = "0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0..."
+    expected_output = "0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0...\n"
     expect(Encoder.encode_line("hello world")).to eq(expected_output)
   end
 end
