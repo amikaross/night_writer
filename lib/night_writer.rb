@@ -8,10 +8,7 @@ class NightWriter
   def initialize
     @filename = ARGV[0]
     @new_filename = ARGV[1]
-  end
-
-  def message 
-    FileIO.read(filename).delete("\n") 
+    @message_length = nil
   end
 
   def by_lines(string)
@@ -19,6 +16,8 @@ class NightWriter
   end
 
   def encode_to_braille
+    message = FileIO.read(filename).delete("\n") 
+    @message_length = message.length
     by_lines(message.downcase).each_with_object("") do |line, string|
       string << "#{Encoder.encode_line(line)}\n"
     end
@@ -26,7 +25,7 @@ class NightWriter
 
   def terminal_output
     FileIO.write(new_filename, encode_to_braille)
-    "Created '#{new_filename}' containing #{message.length} characters."
+    "Created '#{new_filename}' containing #{@message_length} characters."
   end
 end
 

@@ -10,11 +10,8 @@ class NightReader
     @new_filename = ARGV[1]
   end
 
-  def braille_message 
-    FileIO.read(filename)
-  end
-
   def decode_from_braille
+    braille_message = FileIO.read(filename)
     by_lines(braille_message).each_with_object("") do |line, string|
       string << "#{Encoder.decode_line(line)}"
     end
