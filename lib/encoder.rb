@@ -24,6 +24,17 @@ class Encoder
     braille_line = "#{line_1}\n#{line_2}\n#{line_3}\n"
   end
 
+  def self.decode_line(line)
+    #array of rows 
+    nested_array = line.split("\n").map { |row| row.chars.each_slice(2).map(&:join) }
+    row_length = nested_array[0].length
+    string = ""
+    (0..row_length - 1).each do |i|  
+      string << self.decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}")
+    end
+    string
+  end
+
   def self.dictionary
     dictionary = {"a" => ["0.", "..", ".."],
                   "b" => ["0.", "0.", ".."],
