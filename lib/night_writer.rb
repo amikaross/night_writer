@@ -31,8 +31,8 @@ class NightWriter
 end
 
 # runner code that has to be commented out when running test suite 
-night_writer = NightWriter.new(ARGV[0])
-puts night_writer.terminal_output
+# night_writer = NightWriter.new(ARGV[0])
+# puts night_writer.terminal_output
 
 # require 'pry'; binding.pry
 

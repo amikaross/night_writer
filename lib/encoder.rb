@@ -3,6 +3,7 @@ class Encoder
     braille_char = self.dictionary[char]
   end
 
+# Would love to refactor this one!!!!!!
   def self.encode_line(line)
     braille_chars = line.split("").each_with_object([]) do |char, array|
       next if char == "\n"
