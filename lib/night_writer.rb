@@ -3,11 +3,11 @@ require "./lib/encoder"
 
 class NightWriter
   attr_reader :message,
-              :filename
+              :new_filename
 
   def initialize(file)
     @message = FileIO.read(file)
-    @filename = ARGV[1]
+    @new_filename = ARGV[1]
   end
 
   def by_lines(string)
@@ -20,19 +20,13 @@ class NightWriter
     end
   end
 
-  def output_file
-    FileIO.write(filename, encode_to_braille)
-  end
-
   def terminal_output
-    output_file
-    "Created '#{filename}' containing #{message.length} characters"
+    FileIO.write(new_filename, encode_to_braille)
+    "Created '#{new_filename}' containing #{message.length} characters."
   end
 end
 
 # runner code that has to be commented out when running test suite 
-night_writer = NightWriter.new(ARGV[0])
-puts night_writer.terminal_output
-
-# require 'pry'; binding.pry
+# night_writer = NightWriter.new(ARGV[0])
+# puts night_writer.terminal_output
 

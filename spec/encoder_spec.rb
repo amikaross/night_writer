@@ -52,4 +52,14 @@ RSpec.describe Encoder do
     expected_output = "0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0...\n"
     expect(Encoder.encode_line("hello world")).to eq(expected_output)
   end
+
+  it "can decode a given braille char into plain text (regardless of trailing new lines" do
+    expect(Encoder.decode_char("0.\n..\n..")).to eq("a")
+    expect(Encoder.decode_char("0.\n..\n..\n\n")).to eq("a")
+  end
+
+  it "can decode a given braille line into plain text" do 
+    input = "0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0...\n"
+    expect(Encoder.decode_line(input)).to eq("hello world")
+  end
 end

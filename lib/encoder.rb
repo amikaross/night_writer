@@ -3,6 +3,11 @@ class Encoder
     braille_char = self.dictionary[char]
   end
 
+  def self.decode_char(string)
+    plain_char = self.dictionary.key(string.split("\n"))
+  end
+
+# Would love to refactor this one!!!!!!
   def self.encode_line(line)
     braille_chars = line.split("").each_with_object([]) do |char, array|
       next if char == "\n"
@@ -17,6 +22,14 @@ class Encoder
       line_3 << char_array[2]
     end
     braille_line = "#{line_1}\n#{line_2}\n#{line_3}\n"
+  end
+
+  def self.decode_line(line)
+    nested_array = line.split("\n").map { |row| row.chars.each_slice(2).map(&:join) }
+    row_length = nested_array[0].length
+    (0..row_length - 1).each_with_object("") do |i, string|  
+      string << self.decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}")
+    end
   end
 
   def self.dictionary

@@ -7,7 +7,7 @@ RSpec.describe FileIO do
 
   it "can read a file" do 
     file_reader = FileIO.read("./spec/fixtures/test.txt")
-    expect(file_reader).to eq "this is a test"
+    expect(file_reader).to eq("this is a test")
   end
 
   it "can write a file" do 
