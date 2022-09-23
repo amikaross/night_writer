@@ -25,14 +25,11 @@ class Encoder
   end
 
   def self.decode_line(line)
-    #array of rows 
     nested_array = line.split("\n").map { |row| row.chars.each_slice(2).map(&:join) }
     row_length = nested_array[0].length
-    string = ""
-    (0..row_length - 1).each do |i|  
+    (0..row_length - 1).each_with_object("") do |i, string|  
       string << self.decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}")
     end
-    string
   end
 
   def self.dictionary
