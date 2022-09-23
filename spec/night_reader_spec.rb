@@ -25,4 +25,12 @@ RSpec.describe NightReader do
       expect(night_reader.decode_from_braille).to eq(expected_output)
     end
   end
+
+  describe "#terminal_output" do 
+    it "returns a string with the correct filename and number of characters" do 
+      night_reader = NightReader.new("./spec/fixtures/braille_test.txt") 
+      allow(night_reader).to receive(:new_filename).and_return("original_message.txt")
+      expect(night_reader.terminal_output).to eq("Created 'original_message.txt' containing 14 characters") 
+    end
+  end
 end

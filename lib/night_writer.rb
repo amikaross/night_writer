@@ -30,5 +30,3 @@ end
 # night_writer = NightWriter.new(ARGV[0])
 # puts night_writer.terminal_output
 
-# require 'pry'; binding.pry
-
