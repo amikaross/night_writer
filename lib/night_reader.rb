@@ -11,6 +11,6 @@ class NightReader
   end
 
   def decode_from_braille
-    Encoder.decode_char(@braille_message)
+    Encoder.decode_line(@braille_message)
   end
 end
