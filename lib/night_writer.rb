@@ -6,7 +6,7 @@ class NightWriter
               :filename
 
   def initialize(file)
-    @message = FileIO.new.read(file)
+    @message = FileIO.read(file)
     @filename = ARGV[1]
   end
 
@@ -15,6 +15,10 @@ class NightWriter
       string << "#{Encoder.encode_line(line)}\n"
     end
   end
+
+  # def output_file
+  #   FileIO.
+  # end
 
   def by_lines(string)
     (0..(string.length-1)/40).map { |i| string[i * 40, 40] }

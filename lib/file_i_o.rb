@@ -1,5 +1,5 @@
 class FileIO
-  def read(filename)
+  def self.read(filename)
     File.read(filename)
   end
 
