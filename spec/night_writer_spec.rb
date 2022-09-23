@@ -37,11 +37,11 @@ RSpec.describe NightWriter do
     end
   end
 
-  describe "#cli" do 
-    it "outputs a string with the correct filename and number of characters" do 
+  describe "#terminal_output" do 
+    it "returns a string with the correct filename and number of characters" do 
       night_writer = NightWriter.new("./spec/fixtures/test.txt") 
       allow(night_writer).to receive(:filename).and_return("braille.txt")
-      expect(night_writer.cli).to eq("Created 'braille.txt' containing 14 characters") 
+      expect(night_writer.terminal_output).to eq("Created 'braille.txt' containing 14 characters") 
     end
   end
 end
