@@ -2,16 +2,20 @@ require "./lib/file_i_o"
 require "./lib/encoder"
 
 class NightReader 
-  attr_reader :braille_message,
+  attr_reader :filename,
               :new_filename
   
-  def initialize(file)
-    @braille_message = FileIO.read(file)
+  def initialize
+    @filename = ARGV[0]
     @new_filename = ARGV[1]
   end
 
+  def braille_message 
+    FileIO.read(filename)
+  end
+
   def decode_from_braille
-    by_lines(@braille_message).each_with_object("") do |line, string|
+    by_lines(braille_message).each_with_object("") do |line, string|
       string << "#{Encoder.decode_line(line)}"
     end
   end
@@ -27,7 +31,5 @@ class NightReader
 end
 
 
-if ARGV[0] != "spec"
-  night_reader = NightReader.new(ARGV[0])
-  puts night_reader.terminal_output
-end
+night_reader = NightReader.new
+puts night_reader.terminal_output unless ARGV[0] == "spec"
