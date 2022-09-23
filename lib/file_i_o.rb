@@ -3,7 +3,7 @@ class FileIO
     File.read(filename)
   end
 
-  def write(filename, text)
+  def self.write(filename, text)
     new_file = File.open(filename, "w")
     new_file.write(text)
     new_file.close
