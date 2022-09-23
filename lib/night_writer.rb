@@ -1,4 +1,4 @@
-require "./lib/file_reader"
+require "./lib/file_i_o"
 require "./lib/encoder"
 
 class NightWriter
@@ -6,7 +6,7 @@ class NightWriter
               :filename
 
   def initialize(file)
-    @message = FileReader.new.read(file)
+    @message = FileIO.new.read(file)
     @filename = ARGV[1]
   end
 
