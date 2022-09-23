@@ -13,5 +13,6 @@ RSpec.describe FileIO do
   it "can write a file" do 
     file_writer = FileIO.write("test.txt", "This is a test.")
     expect(File.read("test.txt")).to eq("This is a test.")
+    File.delete("test.txt")
   end
 end
