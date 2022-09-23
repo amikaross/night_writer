@@ -11,6 +11,12 @@ class NightReader
   end
 
   def decode_from_braille
-    Encoder.decode_line(@braille_message)
+    by_lines(@braille_message).each_with_object("") do |line, string|
+      string << "#{Encoder.decode_line(line)}"
+    end
+  end
+
+  def by_lines(string)
+    string.split("\n\n")
   end
 end
