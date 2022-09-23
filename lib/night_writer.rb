@@ -1,4 +1,5 @@
 require "./lib/file_reader"
+require "./lib/encoder"
 
 class NightWriter
   attr_reader :message,
@@ -10,7 +11,8 @@ class NightWriter
   end
 
   def encode_to_braille
-    array_of_lines = by_lines(@message.downcase)
+    # array_of_lines = by_lines(@message.downcase)
+    Encoder.encode(@message)
   end
 
   def by_lines(string)
@@ -23,8 +25,8 @@ class NightWriter
 end
 
 # runner code that has to be commented out when running test suite 
-night_writer = NightWriter.new(ARGV[0])
-puts night_writer.cli
+# night_writer = NightWriter.new(ARGV[0])
+# puts night_writer.cli
 
 # require 'pry'; binding.pry
 
