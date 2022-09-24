@@ -41,11 +41,14 @@ RSpec.describe Encoder do
     expect(Encoder.dictionary).to eq(dictionary)
   end
 
-  it "can encode a given plain character to an array of braille" do
+  it "can encode a given lowercase plain character to an array of braille" do
     expect(Encoder.encode_char("a")).to eq(["0.", "..", ".."])
     expect(Encoder.encode_char(" ")).to eq(["..", "..", ".."])
     expect(Encoder.encode_char(",")).to eq(["..", "0.", ".."])
-    expect(Encoder.encode_char("z")).to eq(["0.", ".0", "00"])
+  end
+
+  it "can encode a given uppercase plain character to an array of braille" do 
+    expect(Encoder.encode_char("A")).to eq(["..0.", "....", ".0.."])
   end
 
   it "can encode a given plain-text line into braille" do 
