@@ -17,10 +17,7 @@ class NightWriter
     line_number = 0
     counter = 0 
     string.chars.each_with_object((0..number_of_lines).map { |i| "" }) do |char, array|
-      if counter == 40 
-        counter = 0
-        line_number += 1
-      end
+      if counter == 40 then counter = 0 and line_number += 1 end 
       array[line_number] << char 
       ("A".."Z").include?(char) ? counter += 2 : counter += 1 
     end
