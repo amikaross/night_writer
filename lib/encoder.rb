@@ -12,20 +12,15 @@ class Encoder
     plain_char = self.dictionary.key(string.split("\n"))
   end
 
-# Would love to refactor this one!!!!!!
   def self.encode_line(line)
-    braille_chars = line.split("").each_with_object([]) do |char, array|
-      array << self.encode_char(char)
-    end 
-    line_1 = ""
-    line_2 = ""
-    line_3 = ""
+    braille_chars = line.chars.map { |char| self.encode_char(char) }
+    lines = ["", "", ""]
     braille_chars.each do |char_array|
-      line_1 << char_array[0]
-      line_2 << char_array[1]
-      line_3 << char_array[2]
+      lines[0] << char_array[0]
+      lines[1] << char_array[1]
+      lines[2] << char_array[2]
     end
-    braille_line = "#{line_1}\n#{line_2}\n#{line_3}\n"
+    braille_line = "#{lines[0]}\n#{lines[1]}\n#{lines[2]}\n"
   end
 
   def self.decode_line(line)
@@ -37,7 +32,8 @@ class Encoder
   end
 
   def self.dictionary
-    dictionary = {"a" => ["0.", "..", ".."],
+    dictionary = {
+                  "a" => ["0.", "..", ".."],
                   "b" => ["0.", "0.", ".."],
                   "c" => ["00", "..", ".."],
                   "d" => ["00", ".0", ".."],
