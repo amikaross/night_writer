@@ -42,7 +42,7 @@ class NightWriter < Translator
       lines[1] << array[1]
       lines[2] << array[2]
     end
-    braille_line = "#{lines[0]}\n#{lines[1]}\n#{lines[2]}\n"
+    braille_line = lines.join("\n") + "\n"
   end
 
   def encode_message
