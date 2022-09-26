@@ -1,10 +1,11 @@
 class Encoder
   def self.encode_char(char)
-    if self.dictionary.keys.include?(char)
-      braille_char = self.dictionary[char]
-    else 
+    if ("A".."Z").include?(char)
       char = char.downcase
       ["..", "..", ".0"].zip(self.dictionary[char]).map(&:join)
+    else 
+      self.dictionary.keys.include?(char)
+      braille_char = self.dictionary[char]
     end
   end
 

@@ -12,13 +12,29 @@ class NightWriter
   end
 
   def by_lines(string)
-    (0..(string.length-1)/40).map { |i| string[i * 40, 40] }
+    number_of_braille_chars = string.length + string.scan(/[A-Z]/).length
+    number_of_lines = number_of_braille_chars / 40 
+    lines = (0..number_of_lines).map { |i| "" }
+    line_number = 0
+    counter = 0 
+    string.chars.each do |char|
+      if counter == 40 
+        counter = 0
+        line_number += 1
+      end
+      lines[line_number] << char 
+      ("A".."Z").include?(char) ? counter += 2 : counter += 1 
+    end
+    lines
   end
+  # def by_lines(string)
+  #   (0..(string.length-1)/40).map { |i| string[i * 40, 40] }
+  # end
 
   def encode_to_braille
     message = FileIO.read(filename).delete("\n") 
     @message_length = message.length
-    by_lines(message.downcase).each_with_object("") do |line, string|
+    by_lines(message).each_with_object("") do |line, string|
       string << "#{Encoder.encode_line(line)}\n"
     end
   end
