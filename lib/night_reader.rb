@@ -29,9 +29,8 @@ class NightReader < Translator
   def decode_line(line)
     rows = split_into_rows(line)
     (0..(rows[0].length - 1)).each_with_object("") do |i, string| 
-      if capitalized_signal?(rows, i)
-        next
-      elsif after_capitalized_signal?(rows, i)
+      next if capitalized_signal?(rows, i)
+      if after_capitalized_signal?(rows, i)
         string << decode_char("#{rows[0][i]}\n#{rows[1][i]}\n#{rows[2][i]}").upcase
       else 
         string << decode_char("#{rows[0][i]}\n#{rows[1][i]}\n#{rows[2][i]}")
