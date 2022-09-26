@@ -14,16 +14,27 @@ class NightReader < Translator
     plain_char = dictionary.key(string.split("\n"))
   end
 
+  def split_into_rows(line)
+    line.split("\n").map { |row| row.chars.each_slice(2).map(&:join) }
+  end
+
+  def capitalized_signal?(rows, index)
+    rows[0][index] == ".." && rows[1][index] == ".." && rows[2][index] == ".0"
+  end
+
+  def after_capitalized_signal?(rows, index)
+    capitalized_signal?(rows, index - 1)
+  end
+
   def decode_line(line)
-    nested_array = line.split("\n").map { |row| row.chars.each_slice(2).map(&:join) }
-    row_length = nested_array[0].length
-    (0..row_length - 1).each_with_object("") do |i, string| 
-      if nested_array[0][i] == ".." && nested_array[1][i] == ".." && nested_array[2][i] == ".0"
+    rows = split_into_rows(line)
+    (0..(rows[0].length - 1)).each_with_object("") do |i, string| 
+      if capitalized_signal?(rows, i)
         next
-      elsif nested_array[0][i - 1] == ".." && nested_array[1][i - 1] == ".." && nested_array[2][i - 1] == ".0"
-        string << decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}").upcase
+      elsif after_capitalized_signal?(rows, i)
+        string << decode_char("#{rows[0][i]}\n#{rows[1][i]}\n#{rows[2][i]}").upcase
       else 
-        string << decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}")
+        string << decode_char("#{rows[0][i]}\n#{rows[1][i]}\n#{rows[2][i]}")
       end
     end
   end
