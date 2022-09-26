@@ -27,8 +27,14 @@ class Encoder
   def self.decode_line(line)
     nested_array = line.split("\n").map { |row| row.chars.each_slice(2).map(&:join) }
     row_length = nested_array[0].length
-    (0..row_length - 1).each_with_object("") do |i, string|  
-      string << self.decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}")
+    (0..row_length - 1).each_with_object("") do |i, string| 
+      if nested_array[0][i] == ".." && nested_array[1][i] == ".." && nested_array[2][i] == ".0"
+        next
+      elsif nested_array[0][i - 1] == ".." && nested_array[1][i - 1] == ".." && nested_array[2][i - 1] == ".0"
+        string << self.decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}").upcase
+      else 
+        string << self.decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}")
+      end
     end
   end
 
