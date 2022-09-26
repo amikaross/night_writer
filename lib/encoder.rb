@@ -1,38 +1,46 @@
 class Encoder
   def self.encode_char(char)
-    braille_char = self.dictionary[char]
+    if ("A".."Z").include?(char)
+      char = char.downcase
+      ["..", "..", ".0"].zip(self.dictionary[char]).map(&:join)
+    else 
+      self.dictionary.keys.include?(char)
+      braille_char = self.dictionary[char]
+    end
   end
 
   def self.decode_char(string)
     plain_char = self.dictionary.key(string.split("\n"))
   end
 
-# Would love to refactor this one!!!!!!
   def self.encode_line(line)
-    braille_chars = line.split("").each_with_object([]) do |char, array|
-      array << self.encode_char(char)
-    end 
-    line_1 = ""
-    line_2 = ""
-    line_3 = ""
+    braille_chars = line.chars.map { |char| self.encode_char(char) }
+    lines = ["", "", ""]
     braille_chars.each do |char_array|
-      line_1 << char_array[0]
-      line_2 << char_array[1]
-      line_3 << char_array[2]
+      lines[0] << char_array[0]
+      lines[1] << char_array[1]
+      lines[2] << char_array[2]
     end
-    braille_line = "#{line_1}\n#{line_2}\n#{line_3}\n"
+    braille_line = "#{lines[0]}\n#{lines[1]}\n#{lines[2]}\n"
   end
 
   def self.decode_line(line)
     nested_array = line.split("\n").map { |row| row.chars.each_slice(2).map(&:join) }
     row_length = nested_array[0].length
-    (0..row_length - 1).each_with_object("") do |i, string|  
-      string << self.decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}")
+    (0..row_length - 1).each_with_object("") do |i, string| 
+      if nested_array[0][i] == ".." && nested_array[1][i] == ".." && nested_array[2][i] == ".0"
+        next
+      elsif nested_array[0][i - 1] == ".." && nested_array[1][i - 1] == ".." && nested_array[2][i - 1] == ".0"
+        string << self.decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}").upcase
+      else 
+        string << self.decode_char("#{nested_array[0][i]}\n#{nested_array[1][i]}\n#{nested_array[2][i]}")
+      end
     end
   end
 
   def self.dictionary
-    dictionary = {"a" => ["0.", "..", ".."],
+    dictionary = {
+                  "a" => ["0.", "..", ".."],
                   "b" => ["0.", "0.", ".."],
                   "c" => ["00", "..", ".."],
                   "d" => ["00", ".0", ".."],

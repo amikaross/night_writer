@@ -41,11 +41,14 @@ RSpec.describe Encoder do
     expect(Encoder.dictionary).to eq(dictionary)
   end
 
-  it "can encode a given plain character to an array of braille" do
+  it "can encode a given lowercase plain character to an array of braille" do
     expect(Encoder.encode_char("a")).to eq(["0.", "..", ".."])
     expect(Encoder.encode_char(" ")).to eq(["..", "..", ".."])
     expect(Encoder.encode_char(",")).to eq(["..", "0.", ".."])
-    expect(Encoder.encode_char("z")).to eq(["0.", ".0", "00"])
+  end
+
+  it "can encode a given uppercase plain character to an array of braille" do 
+    expect(Encoder.encode_char("A")).to eq(["..0.", "....", ".0.."])
   end
 
   it "can encode a given plain-text line into braille" do 
@@ -53,13 +56,22 @@ RSpec.describe Encoder do
     expect(Encoder.encode_line("hello world")).to eq(expected_output)
   end
 
-  it "can decode a given braille char into plain text (regardless of trailing new lines" do
+  it "can decode a given lowercase braille char into plain text (regardless of trailing new lines)" do
     expect(Encoder.decode_char("0.\n..\n..")).to eq("a")
     expect(Encoder.decode_char("0.\n..\n..\n\n")).to eq("a")
   end
 
-  it "can decode a given braille line into plain text" do 
+  it "can decode a given uppercase braille char into plain text" do 
+    expect(Encoder.decode_line("..0.\n....\n.0..")).to eq("A")
+  end
+
+  it "can decode a given lowercase braille line into plain text" do 
     input = "0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0...\n"
     expect(Encoder.decode_line(input)).to eq("hello world")
+  end
+
+  it "can decode a given uppercase braille line into plain text" do 
+    input = "..0.0.0.0.0......00.0.0.00\n..00.00.0..0....00.0000..0\n.0....0.0.0....0.00.0.0...\n"
+    expect(Encoder.decode_line(input)).to eq("Hello World")
   end
 end

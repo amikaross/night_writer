@@ -19,13 +19,36 @@ RSpec.describe NightWriter do
     it "takes plain text and converts it into braille - multiple characters" do 
       night_writer = NightWriter.new
       allow(night_writer).to receive(:filename).and_return("./spec/fixtures/multi_letter.txt")
-      expect(night_writer.encode_to_braille).to eq("0.0.00\n..0...\n......\n\n")
+      expect(night_writer.encode_to_braille).to eq("..0.0.00\n....0...\n.0......\n\n")
     end 
 
     it "takes plain text and converts it into braille - multiple lines" do
       night_writer = NightWriter.new
       allow(night_writer).to receive(:filename).and_return("./spec/fixtures/multi_line.txt")
-      expected_output = ".00...000.0..0...000..0.00..0.0.0.0...0.00..000.0.00000...0.0000..000.0.0.0.0.00\n00.0.....0.000..0..0.....0..00.0..00...00.....00...000.0.....0.0....00..0.0..0.0\n.0....0.....0.....0.....0.....0.000...0...........0.........0...........0.0...0.\n\n000......000..0...000.000.000.\n00.00...0..0.......0.0.....0.0\n..........0...................\n\n"
+      expected_output = ".00...000.0..0...000..0.00..0.0.0.0...0.00..000.0.00000...0.0000..000.0.0.0.0.00\n" +
+                        "00.0.....0.000..0..0.....0..00.0..00...00.....00...000.0.....0.0....00..0.0..0.0\n" +
+                        ".0....0.....0.....0.....0.....0.000...0...........0.........0...........0.0...0.\n\n" +
+                        "000......000..0...000.000.000.\n" +
+                        "00.00...0..0.......0.0.....0.0\n" +
+                        "..........0...................\n\n"
+      expect(night_writer.encode_to_braille).to eq(expected_output)
+    end
+
+    it "accouts for capitalized letters" do 
+      night_writer = NightWriter.new
+      allow(night_writer).to receive(:filename).and_return("./spec/fixtures/capitalized.txt")
+      expected_output = "0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.\n" +
+                        "................................................................................\n" +
+                        "................................................................................\n\n" +
+                        "..0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0.\n" +
+                        "..0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0.\n" +
+                        ".0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0..\n\n" +
+                        "..0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0.\n" +
+                        "..0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0.\n" +
+                        ".0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0...0..\n\n" +
+                        "000000..00..00..00\n" +
+                        "..................\n" +
+                        ".......0...0...0..\n\n" 
       expect(night_writer.encode_to_braille).to eq(expected_output)
     end
   end
@@ -37,6 +60,16 @@ RSpec.describe NightWriter do
       input = "we meet in an hour of change and challenge, in a decade of hope and fear."
       expected_output = ["we meet in an hour of change and challen",
                          "ge, in a decade of hope and fear."]
+        
+      expect(night_writer.by_lines(input)).to eq(expected_output)
+    end
+
+    it "counts capitalized characters as two characters (per braille)" do 
+      night_writer = NightWriter.new
+      allow(night_writer).to receive(:filename).and_return("./spec/fixtures/test.txt")
+      input = "We meet in an hour of change and challenge, in a decade of hope and fear."
+      expected_output = ["We meet in an hour of change and challe",
+                         "nge, in a decade of hope and fear."]
         
       expect(night_writer.by_lines(input)).to eq(expected_output)
     end
