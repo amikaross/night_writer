@@ -5,14 +5,12 @@ RSpec.describe NightWriter do
 
   describe "#initialize" do 
     it "exists" do 
-      allow(night_writer).to receive(:filename).and_return("./spec/fixtures/test.txt")
       expect(night_writer).to be_an_instance_of(NightWriter)
     end
   end
 
   describe "#by_lines" do 
     it "returns an array of strings of 40 characters (until final one which may be less)" do 
-      allow(night_writer).to receive(:filename).and_return("./spec/fixtures/test.txt")
       input = "we meet in an hour of change and challenge, in a decade of hope and fear."
       expected_output = ["we meet in an hour of change and challen",
                         "ge, in a decade of hope and fear."]
@@ -21,7 +19,6 @@ RSpec.describe NightWriter do
     end
 
     it "counts capitalized characters as two characters (per braille)" do 
-      allow(night_writer).to receive(:filename).and_return("./spec/fixtures/test.txt")
       input = "We meet in an hour of change and challenge, in a decade of hope and fear."
       expected_output = ["We meet in an hour of change and challe",
                         "nge, in a decade of hope and fear."]
