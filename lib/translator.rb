@@ -2,6 +2,8 @@ class Translator
   attr_reader :dictionary
 
   def initialize
+    @filename = ARGV[0]
+    @new_filename = ARGV[1]
     @dictionary = {
                   "a" => ["0.", "..", ".."],
                   "b" => ["0.", "0.", ".."],

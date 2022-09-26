@@ -6,8 +6,6 @@ class NightReader < Translator
               :new_filename
   
   def initialize
-    @filename = ARGV[0]
-    @new_filename = ARGV[1]
     super
   end
 

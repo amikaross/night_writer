@@ -6,8 +6,6 @@ class NightWriter < Translator
               :new_filename
 
   def initialize
-    @filename = ARGV[0]
-    @new_filename = ARGV[1]
     @message_length = nil
     super
   end
@@ -29,18 +27,17 @@ class NightWriter < Translator
       char = char.downcase
       ["..", "..", ".0"].zip(self.dictionary[char]).map(&:join)
     else 
-      dictionary.keys.include?(char)
       braille_char = dictionary[char]
     end
   end
 
   def encode_line(line)
-    braille_chars = line.chars.map { |char| self.encode_char(char) }
+    braille_arrays = line.chars.map { |char| encode_char(char) }
     lines = ["", "", ""]
-    braille_chars.each do |char_array|
-      lines[0] << char_array[0]
-      lines[1] << char_array[1]
-      lines[2] << char_array[2]
+    braille_arrays.each do |array|
+      lines[0] << array[0]
+      lines[1] << array[1]
+      lines[2] << array[2]
     end
     braille_line = "#{lines[0]}\n#{lines[1]}\n#{lines[2]}\n"
   end
