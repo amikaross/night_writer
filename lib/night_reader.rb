@@ -2,9 +2,6 @@ require "./lib/file_i_o"
 require "./lib/translator"
 
 class NightReader < Translator
-  attr_reader :filename,
-              :new_filename
-  
   def initialize
     super
   end

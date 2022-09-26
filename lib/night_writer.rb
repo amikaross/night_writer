@@ -2,9 +2,6 @@ require "./lib/file_i_o"
 require "./lib/translator"
 
 class NightWriter < Translator
-  attr_reader :filename,
-              :new_filename
-
   def initialize
     @message_length = nil
     super

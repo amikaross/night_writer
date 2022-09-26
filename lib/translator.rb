@@ -1,5 +1,7 @@
 class Translator
-  attr_reader :dictionary
+  attr_reader :dictionary,
+              :filename,
+              :new_filename
 
   def initialize
     @filename = ARGV[0]
