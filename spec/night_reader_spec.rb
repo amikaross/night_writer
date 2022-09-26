@@ -5,7 +5,6 @@ RSpec.describe NightReader do
 
   describe "#initialize" do 
     it "exists" do 
-      allow(night_reader).to receive(:filename).and_return("./spec/fixtures/braille_test.txt")
       expect(night_reader).to be_an_instance_of(NightReader)
     end
   end
