@@ -1,7 +1,7 @@
 require "./lib/file_i_o"
-require "./lib/encoder"
+require "./lib/translator"
 
-class NightWriter
+class NightWriter < Translator
   attr_reader :filename,
               :new_filename
 
@@ -9,6 +9,7 @@ class NightWriter
     @filename = ARGV[0]
     @new_filename = ARGV[1]
     @message_length = nil
+    super
   end
 
   def by_lines(string)
@@ -23,16 +24,37 @@ class NightWriter
     end
   end
 
-  def encode_to_braille
+  def encode_char(char)
+    if ("A".."Z").include?(char)
+      char = char.downcase
+      ["..", "..", ".0"].zip(self.dictionary[char]).map(&:join)
+    else 
+      dictionary.keys.include?(char)
+      braille_char = dictionary[char]
+    end
+  end
+
+  def encode_line(line)
+    braille_chars = line.chars.map { |char| self.encode_char(char) }
+    lines = ["", "", ""]
+    braille_chars.each do |char_array|
+      lines[0] << char_array[0]
+      lines[1] << char_array[1]
+      lines[2] << char_array[2]
+    end
+    braille_line = "#{lines[0]}\n#{lines[1]}\n#{lines[2]}\n"
+  end
+
+  def encode_message
     message = FileIO.read(filename).delete("\n") 
     @message_length = message.length
     by_lines(message).each_with_object("") do |line, string|
-      string << "#{Encoder.encode_line(line)}\n"
+      string << "#{encode_line(line)}\n"
     end
   end
 
   def terminal_output
-    FileIO.write(new_filename, encode_to_braille)
+    FileIO.write(new_filename, encode_message)
     "Created '#{new_filename}' containing #{@message_length} characters."
   end
 end
