@@ -41,4 +41,13 @@ RSpec.describe Translator do
                 }
     expect(translator.dictionary).to eq(dictionary)
   end
+
+  it "can produce terminal output" do 
+    translator = Translator.new
+    allow(translator).to receive(:new_filename).and_return("test.txt")
+    new_message = "This is a test"
+    allow(translator).to receive(:message_length).and_return(new_message.length)
+    expect(translator.terminal_output(new_message)).to eq("Created 'test.txt' containing 14 characters.")
+    File.delete("test.txt")
+  end
 end
