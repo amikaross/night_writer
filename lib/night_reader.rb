@@ -7,8 +7,12 @@ class NightReader < Translator
   end
 
   def by_lines(string)
-    string.split("\n\n")
-  end
+    if string.include?("\n\n")
+      string.split("\n\n") 
+    else 
+      string.split("\n").each_slice(3).map { |slice| slice.join("\n") }
+    end
+  end 
 
   def decode_char(string)
     plain_char = dictionary.key(string.split("\n"))
