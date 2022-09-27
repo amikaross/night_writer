@@ -30,6 +30,13 @@ RSpec.describe NightReader do
       input = "..0.0.0.0.0......00.0.0.00\n..00.00.0..0....00.0000..0\n.0....0.0.0....0.00.0.0...\n"
       expect(night_reader.decode_line(input)).to eq("Hello World")
     end
+
+    it "can decode a given braille line with numbers into plain text" do 
+      input = ".0.0.00..00..000.000.00..000.000.00..0.0...0.0.00..00..000.000.00..000.000.00..0.0\n" +
+              ".000.0...00..0...0.0.0.0.00..000.000.00....000.0...00..0...0.0.0.0.00..000.000.00.\n" +
+              "00..00..00..00..00..00..00..00..00..00....00..00..00..00..00..00..00..00..00..00..\n\n" 
+      expect(night_reader.decode_line(input)).to eq("0123456789 0123456789")
+    end
   end
 
   describe "#decode_message" do 
