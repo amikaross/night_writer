@@ -37,6 +37,10 @@ RSpec.describe NightWriter do
     it "can encode a given uppercase plain character to an array of braille" do 
       expect(night_writer.encode_char("A")).to eq(["..0.", "....", ".0.."])
     end
+
+    it "can encode a given number to an array of braille" do 
+      expect(night_writer.encode_char("1")).to eq([".00.", ".0..", "00.."])
+    end
   end 
 
   describe "#encode_line" do
@@ -83,6 +87,16 @@ RSpec.describe NightWriter do
                         "..................\n" +
                         ".......0...0...0..\n\n" 
       expect(night_writer.encode_message).to eq(expected_output)
+    end
+
+    it "accounts for numbers" do 
+      allow(night_writer).to receive(:filename).and_return("./spec/fixtures/numbers.txt")
+      expected_output = ".0.0.00..00..000.000.00..000.000.00..0.0...0.0.00..00..000.000.00..000.000.00..0.0\n" +
+                        ".000.0...00..0...0.0.0.0.00..000.000.00....000.0...00..0...0.0.0.0.00..000.000.00.\n" +
+                        "00..00..00..00..00..00..00..00..00..00....00..00..00..00..00..00..00..00..00..00..\n\n" +
+                        "...0.0.00..00..000.000.00...\n" +
+                        "...000.0...00..0...0.0.0.0..\n" +
+                        "..00..00..00..00..00..00....\n\n"
     end
   end
 

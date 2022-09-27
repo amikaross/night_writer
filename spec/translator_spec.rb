@@ -37,9 +37,24 @@ RSpec.describe Translator do
                   " " => ["..", "..", ".."],
                   "," => ["..", "0.", ".."],
                   "." => ["..", "00", ".0"],
-                  "'" => ["..", "..", "0."]
+                  "'" => ["..", "..", "0."],
+                  "1" => "a",
+                  "2" => "b",
+                  "3" => "c",
+                  "4" => "d",
+                  "5" => "e",
+                  "6" => "f",
+                  "7" => "g",
+                  "8" => "h",
+                  "9" => "i",
+                  "0" => "j"
                 }
     expect(translator.dictionary).to eq(dictionary)
+  end
+
+  it "returns the alphabetical character associated with a number" do 
+    translator = Translator.new
+    expect(translator.to_alpha("1")).to eq("a")
   end
 
   it "can produce terminal output" do 
