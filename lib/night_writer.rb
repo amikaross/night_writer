@@ -3,7 +3,6 @@ require "./lib/translator"
 
 class NightWriter < Translator
   def initialize
-    @message_length = nil
     super
   end
 
@@ -50,13 +49,12 @@ class NightWriter < Translator
     end
   end
 
-  def terminal_output
-    FileIO.write(new_filename, encode_message)
-    "Created '#{new_filename}' containing #{@message_length} characters."
+  def run 
+    terminal_output(encode_message)
   end
 end
 
 
 night_writer = NightWriter.new
-puts night_writer.terminal_output unless ARGV[0] == "spec"
+puts night_writer.run unless ARGV[0] == "spec"
 

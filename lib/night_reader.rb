@@ -44,17 +44,18 @@ class NightReader < Translator
 
   def decode_message
     braille_message = FileIO.read(filename)
-    by_lines(braille_message).each_with_object("") do |line, string|
+    message = by_lines(braille_message).each_with_object("") do |line, string|
       string << "#{decode_line(line)}"
     end
+    @message_length = message.length
+    message.scan(/.{1,80}/).join("\n")
   end
 
-  def terminal_output
-    FileIO.write(new_filename, decode_message)
-    "Created '#{new_filename}' containing #{decode_message.length} characters."
+  def run 
+    terminal_output(decode_message)
   end
 end
 
 
 night_reader = NightReader.new
-puts night_reader.terminal_output unless ARGV[0] == "spec"
+puts night_reader.run unless ARGV[0] == "spec"

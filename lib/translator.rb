@@ -6,6 +6,7 @@ class Translator
   def initialize
     @filename = ARGV[0]
     @new_filename = ARGV[1]
+    @message_length = nil
     @dictionary = {
                   "a" => ["0.", "..", ".."],
                   "b" => ["0.", "0.", ".."],
@@ -38,6 +39,11 @@ class Translator
                   "." => ["..", "00", ".0"],
                   "'" => ["..", "..", "0."]
                 }
+  end
+
+  def terminal_output(new_message)
+    FileIO.write(new_filename, new_message)
+    "Created '#{new_filename}' containing #{@message_length} characters."
   end
 end
 
