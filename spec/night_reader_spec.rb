@@ -56,12 +56,12 @@ RSpec.describe NightReader do
     end
   end
 
-  describe "#terminal_output" do 
+  describe "#run" do 
     it "returns a string with the correct filename and number of characters" do 
-      allow(night_reader).to receive(:filename).and_return("./spec/fixtures/braille_test.txt") 
-      allow(night_reader).to receive(:new_filename).and_return("original_message.txt")
-      expect(night_reader.terminal_output).to eq("Created 'original_message.txt' containing 14 characters.") 
-      File.delete("original_message.txt")
+      allow(night_reader).to receive(:filename).and_return("./spec/fixtures/braille_test.txt")
+      allow(night_reader).to receive(:new_filename).and_return("test.txt")
+      expect(night_reader.run).to eq("Created 'test.txt' containing 14 characters.")
+      File.delete("test.txt")
     end
   end
 end
