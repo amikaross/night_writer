@@ -38,14 +38,20 @@ class NightReader < Translator
     number_signal?(rows, index - 1)
   end
 
+  def after_signal(rows, index)
+    if after_capitalized_signal?(rows, index)
+      decode_char("#{rows[0][index]}\n#{rows[1][index]}\n#{rows[2][index]}").upcase
+    else 
+      dictionary.key(decode_char("#{rows[0][index]}\n#{rows[1][index]}\n#{rows[2][index]}"))
+    end
+  end
+
   def decode_line(line)
     rows = split_into_rows(line)
     (0..(rows[0].length - 1)).each_with_object("") do |i, string| 
       next if (capitalized_signal?(rows, i) || number_signal?(rows, i))
-      if after_capitalized_signal?(rows, i)
-        string << decode_char("#{rows[0][i]}\n#{rows[1][i]}\n#{rows[2][i]}").upcase
-      elsif after_number_signal?(rows, i)
-        string << dictionary.key(decode_char("#{rows[0][i]}\n#{rows[1][i]}\n#{rows[2][i]}"))
+      if after_capitalized_signal?(rows, i) || after_number_signal?(rows, i)
+        string << after_signal(rows, i)
       else 
         string << decode_char("#{rows[0][i]}\n#{rows[1][i]}\n#{rows[2][i]}")
       end
