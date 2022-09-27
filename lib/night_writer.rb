@@ -19,11 +19,7 @@ class NightWriter < Translator
     string.chars.each_with_object((0..total_lines(string)).map { |i| "" }) do |char, array|
       if counter >= 40 then counter = 0 and line_number += 1 end 
       array[line_number] << char 
-      if ("A".."Z").include?(char) || ("0".."9").include?(char)
-        counter += 2 
-      else 
-        counter += 1 
-      end 
+      (("A".."Z").include?(char) || ("0".."9").include?(char)) ? counter += 2 : counter += 1 
     end
   end
 
