@@ -38,13 +38,19 @@ RSpec.describe NightReader do
       expect(night_reader.decode_message).to eq("a")
     end
 
-    it "takes plain text and converts it into braille - multiple characters" do 
+    it "takes braille text and converts it into plain text - multiple characters" do 
       allow(night_reader).to receive(:filename).and_return("./spec/fixtures/braille_multi_letter.txt")
       expect(night_reader.decode_message).to eq("abc")
     end 
 
-    it "takes plain text and converts it into braille - multiple lines" do
+    it "takes braille text and converts it into plain text - multiple lines" do
       allow(night_reader).to receive(:filename).and_return("./spec/fixtures/braille_multi_line.txt")
+      expected_output = "we meet in an hour of change and challenge, in a decade"
+      expect(night_reader.decode_message).to eq(expected_output)
+    end
+
+    it "can account for braille messages that aren't split with a double newline ('\n\n')" do 
+      allow(night_reader).to receive(:filename).and_return("./spec/fixtures/single_new_line_braille.txt")
       expected_output = "we meet in an hour of change and challenge, in a decade"
       expect(night_reader.decode_message).to eq(expected_output)
     end
